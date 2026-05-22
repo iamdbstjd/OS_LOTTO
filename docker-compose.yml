@@ -1,0 +1,37 @@
+services:
+  web:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_SECRET_KEY: "dev-docker-secret-key"
+      DJANGO_DEBUG: "1"
+      DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1,0.0.0.0"
+      DB_HOST: db
+      DB_PORT: "5432"
+      POSTGRES_DB: lotto
+      POSTGRES_USER: lotto
+      POSTGRES_PASSWORD: lotto
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: lotto
+      POSTGRES_USER: lotto
+      POSTGRES_PASSWORD: lotto
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lotto -d lotto"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:

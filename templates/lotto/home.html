@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load lotto_extras %}
+
+{% block title %}구매 | Lotto 6/45{% endblock %}
+
+{% block content %}
+<section class="lotto-hero">
+    <div class="hero-copy">
+        <p class="eyebrow">{{ open_draw.round_number }}회차 판매중</p>
+        <h1>오늘의 행운 번호를 선택하세요</h1>
+        <p class="hero-sub">수동으로 직접 고르거나 자동으로 빠르게 발급할 수 있습니다.</p>
+        <div class="hero-actions">
+            <a class="primary link-button" href="#purchase">구매하기</a>
+            <a class="secondary" href="{% url 'result_list' %}">당첨 확인</a>
+        </div>
+    </div>
+    <div class="hero-ticket" aria-hidden="true">
+        <div class="ticket-topline">LOTTO 6/45</div>
+        <div class="draw-machine">
+            <span class="lotto-ball ball-yellow">07</span>
+            <span class="lotto-ball ball-blue">14</span>
+            <span class="lotto-ball ball-red">23</span>
+            <span class="lotto-ball ball-gray">32</span>
+            <span class="lotto-ball ball-green">41</span>
+        </div>
+        <div class="ticket-bottomline">{{ open_draw.round_number }}회차</div>
+    </div>
+</section>
+
+<section class="metric-grid summary-grid">
+    <article class="metric">
+        <span>내 구매 장수</span>
+        <strong>{{ summary.ticket_count }}</strong>
+    </article>
+    <article class="metric">
+        <span>구매 금액</span>
+        <strong>{{ summary.total_spent|won }}</strong>
+    </article>
+    <article class="metric">
+        <span>당첨 금액</span>
+        <strong>{{ summary.total_prize|won }}</strong>
+    </article>
+    <article class="metric">
+        <span>추첨 대기</span>
+        <strong>{{ summary.pending_count }}</strong>
+    </article>
+</section>
+
+<section id="purchase" class="purchase-grid">
+    <article class="panel purchase-panel manual-panel">
+        <div class="panel-title">
+            <span class="panel-icon">M</span>
+            <div>
+                <p class="eyebrow">Manual</p>
+                <h2>수동 구매</h2>
+            </div>
+        </div>
+        <form method="post" action="{% url 'purchase_manual' %}" class="form-stack">
+            {% csrf_token %}
+            {{ manual_form.non_field_errors }}
+            <div class="number-grid">
+                {% for field in manual_form %}
+                    <label>
+                        {{ field.label }}
+                        {{ field }}
+                        {{ field.errors }}
+                    </label>
+                {% endfor %}
+            </div>
+            <button class="primary" type="submit">수동 구매</button>
+        </form>
+    </article>
+
+    <article class="panel purchase-panel auto-panel">
+        <div class="panel-title">
+            <span class="panel-icon">A</span>
+            <div>
+                <p class="eyebrow">Auto</p>
+                <h2>자동 구매</h2>
+            </div>
+        </div>
+        <div class="quick-pick-preview" aria-hidden="true">
+            <span class="lotto-ball ball-yellow">?</span>
+            <span class="lotto-ball ball-blue">?</span>
+            <span class="lotto-ball ball-red">?</span>
+            <span class="lotto-ball ball-gray">?</span>
+            <span class="lotto-ball ball-green">?</span>
+            <span class="lotto-ball ball-yellow">?</span>
+        </div>
+        <form method="post" action="{% url 'purchase_auto' %}" class="form-stack">
+            {% csrf_token %}
+            {{ auto_form.non_field_errors }}
+            <label>
+                {{ auto_form.quantity.label }}
+                {{ auto_form.quantity }}
+                {{ auto_form.quantity.errors }}
+            </label>
+            <button class="primary" type="submit">자동 구매</button>
+        </form>
+    </article>
+</section>
+
+<section class="panel">
+    <div class="section-head">
+        <h2>최근 구매</h2>
+        <a href="{% url 'ticket_list' %}">전체 보기</a>
+    </div>
+    {% if recent_tickets %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>회차</th>
+                        <th>티켓번호</th>
+                        <th>방식</th>
+                        <th>번호</th>
+                        <th>상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in recent_tickets %}
+                        <tr>
+                            <td>{{ ticket.draw.round_number }}회차</td>
+                            <td><span class="code-badge">{{ ticket.ticket_code }}</span></td>
+                            <td><span class="type-badge">{{ ticket.get_purchase_type_display }}</span></td>
+                            <td>{% include "lotto/includes/number_balls.html" with numbers=ticket.numbers compact=True only %}</td>
+                            <td>
+                                <span class="status-pill {% if ticket.prize_rank %}status-win{% elif ticket.draw.is_drawn %}status-lost{% else %}status-pending{% endif %}">
+                                    {{ ticket.result_display }}
+                                </span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">구매 내역이 없습니다.</p>
+    {% endif %}
+</section>
+{% endblock %}

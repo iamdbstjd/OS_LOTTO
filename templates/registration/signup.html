@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}회원가입 | Lotto 6/45{% endblock %}
+
+{% block content %}
+<section class="auth-panel">
+    <div class="auth-brand">
+        <span class="brand-ball">6/45</span>
+        <p class="eyebrow">Join</p>
+    </div>
+    <h1>회원가입</h1>
+    <form method="post" class="form-stack">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <label>
+                {{ field.label }}
+                {{ field }}
+                {{ field.errors }}
+            </label>
+        {% endfor %}
+        <button class="primary" type="submit">가입하기</button>
+    </form>
+</section>
+{% endblock %}

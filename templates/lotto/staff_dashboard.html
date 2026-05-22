@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load lotto_extras %}
+
+{% block title %}관리자 | Lotto 6/45{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">관리자</p>
+        <h1>판매 및 추첨 관리</h1>
+    </div>
+    <form method="post" action="{% url 'run_draw' %}">
+        {% csrf_token %}
+        <button class="primary" type="submit">{{ metrics.open_draw.round_number }}회차 추첨</button>
+    </form>
+</section>
+
+<div class="toolbar-row">
+    <a class="secondary" href="{% url 'staff_sales' %}">판매 내역 보기</a>
+</div>
+
+<section class="metric-grid">
+    <article class="metric">
+        <span>전체 판매 장수</span>
+        <strong>{{ metrics.ticket_count }}</strong>
+    </article>
+    <article class="metric">
+        <span>총 판매액</span>
+        <strong>{{ metrics.total_sales|won }}</strong>
+    </article>
+    <article class="metric">
+        <span>총 지급액</span>
+        <strong>{{ metrics.total_payout|won }}</strong>
+    </article>
+    <article class="metric">
+        <span>서비스 이익</span>
+        <strong>{{ metrics.service_profit|won }}</strong>
+    </article>
+</section>
+
+<section class="panel">
+    <div class="section-head">
+        <h2>추첨 내역</h2>
+        <span>{{ metrics.drawn_count }}회 완료</span>
+    </div>
+    {% if recent_draws %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>회차</th>
+                        <th>당첨 번호</th>
+                        <th>보너스</th>
+                        <th>추첨 일시</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for draw in recent_draws %}
+                        <tr>
+                            <td>{{ draw.round_number }}회차</td>
+                            <td>{% include "lotto/includes/number_balls.html" with numbers=draw.winning_numbers compact=True only %}</td>
+                            <td><span class="lotto-ball ball-row-compact {{ draw.bonus_number|ball_class }}">{{ draw.bonus_number|stringformat:"02d" }}</span></td>
+                            <td>{{ draw.drawn_at|date:"Y-m-d H:i" }}</td>
+                            <td><a href="{% url 'staff_draw_detail' draw.pk %}">상세</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">추첨 내역이 없습니다.</p>
+    {% endif %}
+</section>
+{% endblock %}

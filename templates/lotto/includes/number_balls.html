@@ -1,0 +1,10 @@
+{% load lotto_extras %}
+<div class="ball-row{% if compact %} ball-row-compact{% endif %}">
+    {% for number in numbers %}
+        <span class="lotto-ball {{ number|ball_class }}">{{ number|stringformat:"02d" }}</span>
+    {% endfor %}
+    {% if bonus %}
+        <span class="bonus-plus">+</span>
+        <span class="lotto-ball bonus-ball {{ bonus|ball_class }}">{{ bonus|stringformat:"02d" }}</span>
+    {% endif %}
+</div>

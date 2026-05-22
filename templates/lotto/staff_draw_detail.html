@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load lotto_extras %}
+
+{% block title %}{{ draw.round_number }}회차 | Lotto 6/45{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">{{ draw.round_number }}회차</p>
+        <h1>당첨 내역</h1>
+    </div>
+    <a class="secondary" href="{% url 'staff_dashboard' %}">관리자 홈</a>
+</section>
+
+<section class="panel result-strip">
+    <div>
+        <span>당첨 번호</span>
+        {% include "lotto/includes/number_balls.html" with numbers=draw.winning_numbers bonus=draw.bonus_number only %}
+    </div>
+    <div>
+        <span>추첨 일시</span>
+        <strong>{{ draw.drawn_at|date:"Y-m-d H:i" }}</strong>
+    </div>
+    <div>
+        <span>판매액</span>
+        <strong>{{ total_sales|won }}</strong>
+    </div>
+    <div>
+        <span>이익</span>
+        <strong>{{ profit|won }}</strong>
+    </div>
+</section>
+
+<section class="metric-grid">
+    {% for rank, count, prize in rank_rows %}
+        <article class="metric">
+            <span>{{ rank }}등</span>
+            <strong>{{ count }}명</strong>
+            <small>{{ prize|won }}</small>
+        </article>
+    {% endfor %}
+</section>
+
+<section class="panel">
+    <h2>구매자별 결과</h2>
+    {% if tickets %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>사용자</th>
+                        <th>티켓번호</th>
+                        <th>번호</th>
+                        <th>일치</th>
+                        <th>보너스</th>
+                        <th>결과</th>
+                        <th>당첨금</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket.user.username }}</td>
+                            <td><span class="code-badge">{{ ticket.ticket_code }}</span></td>
+                            <td>{% include "lotto/includes/number_balls.html" with numbers=ticket.numbers compact=True only %}</td>
+                            <td>{{ ticket.match_count }}개</td>
+                            <td>{% if ticket.matched_bonus %}일치{% else %}-{% endif %}</td>
+                            <td>
+                                <span class="status-pill {% if ticket.prize_rank %}status-win{% else %}status-lost{% endif %}">
+                                    {{ ticket.result_display }}
+                                </span>
+                            </td>
+                            <td>{{ ticket.prize_amount|won }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">구매 내역이 없습니다.</p>
+    {% endif %}
+</section>
+{% endblock %}

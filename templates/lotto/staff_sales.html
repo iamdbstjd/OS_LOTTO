@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load lotto_extras %}
+
+{% block title %}판매 내역 | Lotto 6/45{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Sales</p>
+        <h1>판매 내역</h1>
+    </div>
+    <a class="secondary" href="{% url 'staff_dashboard' %}">관리자 홈</a>
+</section>
+
+<section class="metric-grid summary-grid">
+    <article class="metric">
+        <span>전체 판매 장수</span>
+        <strong>{{ metrics.ticket_count }}</strong>
+    </article>
+    <article class="metric">
+        <span>총 판매액</span>
+        <strong>{{ metrics.total_sales|won }}</strong>
+    </article>
+    <article class="metric">
+        <span>총 지급액</span>
+        <strong>{{ metrics.total_payout|won }}</strong>
+    </article>
+    <article class="metric">
+        <span>서비스 이익</span>
+        <strong>{{ metrics.service_profit|won }}</strong>
+    </article>
+</section>
+
+<section class="panel">
+    <div class="section-head">
+        <h2>회차별 판매 요약</h2>
+        <span>{{ draw_sales|length }}개 회차</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>회차</th>
+                    <th>상태</th>
+                    <th>판매 장수</th>
+                    <th>판매액</th>
+                    <th>지급액</th>
+                    <th>이익</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in draw_sales %}
+                    <tr>
+                        <td>{{ row.draw.round_number }}회차</td>
+                        <td><span class="status-pill {% if row.draw.is_drawn %}status-lost{% else %}status-pending{% endif %}">{{ row.draw.get_status_display }}</span></td>
+                        <td>{{ row.ticket_count }}</td>
+                        <td>{{ row.total_sales|won }}</td>
+                        <td>{{ row.total_payout|won }}</td>
+                        <td>{{ row.profit|won }}</td>
+                        <td>
+                            {% if row.draw.is_drawn %}
+                                <a href="{% url 'staff_draw_detail' row.draw.pk %}">당첨 상세</a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7">판매 회차가 없습니다.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="panel">
+    <div class="section-head">
+        <h2>최근 발급 티켓</h2>
+        <span>최대 50건</span>
+    </div>
+    {% if recent_tickets %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>구매 일시</th>
+                        <th>티켓번호</th>
+                        <th>사용자</th>
+                        <th>회차</th>
+                        <th>방식</th>
+                        <th>번호</th>
+                        <th>결과</th>
+                        <th>당첨금</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in recent_tickets %}
+                        <tr>
+                            <td>{{ ticket.created_at|date:"Y-m-d H:i" }}</td>
+                            <td><span class="code-badge">{{ ticket.ticket_code }}</span></td>
+                            <td>{{ ticket.user.username }}</td>
+                            <td>{{ ticket.draw.round_number }}회차</td>
+                            <td><span class="type-badge">{{ ticket.get_purchase_type_display }}</span></td>
+                            <td>{% include "lotto/includes/number_balls.html" with numbers=ticket.numbers compact=True only %}</td>
+                            <td>
+                                <span class="status-pill {% if ticket.prize_rank %}status-win{% elif ticket.draw.is_drawn %}status-lost{% else %}status-pending{% endif %}">
+                                    {{ ticket.result_display }}
+                                </span>
+                            </td>
+                            <td>{{ ticket.prize_amount|won }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">발급된 티켓이 없습니다.</p>
+    {% endif %}
+</section>
+{% endblock %}

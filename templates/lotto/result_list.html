@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load lotto_extras %}
+
+{% block title %}당첨 확인 | Lotto 6/45{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">{{ user.username }}</p>
+        <h1>당첨 확인</h1>
+    </div>
+    <a class="secondary" href="{% url 'ticket_list' %}">구매 내역</a>
+</section>
+
+<section class="panel">
+    {% if tickets %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>회차</th>
+                        <th>티켓번호</th>
+                        <th>번호</th>
+                        <th>일치</th>
+                        <th>보너스</th>
+                        <th>결과</th>
+                        <th>당첨금</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket.draw.round_number }}회차</td>
+                            <td><span class="code-badge">{{ ticket.ticket_code }}</span></td>
+                            <td>{% include "lotto/includes/number_balls.html" with numbers=ticket.numbers compact=True only %}</td>
+                            <td>{{ ticket.match_count }}개</td>
+                            <td>{% if ticket.matched_bonus %}일치{% else %}-{% endif %}</td>
+                            <td>
+                                <span class="status-pill {% if ticket.prize_rank %}status-win{% else %}status-lost{% endif %}">
+                                    {{ ticket.result_display }}
+                                </span>
+                            </td>
+                            <td>{{ ticket.prize_amount|won }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">추첨 완료된 구매 내역이 없습니다.</p>
+    {% endif %}
+</section>
+{% endblock %}
