@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <title>6/45 Lotto 웹 사이트 개발 보고서</title>
+  <title>Lotto 사이트</title>
   <style>
     @page {
       size: A4;
@@ -102,9 +102,14 @@
   </style>
 </head>
 <body>
-<h1 id="645-lotto">6/45 Lotto 웹 사이트 개발 보고서</h1>
+<h1 id="lotto">Lotto 사이트</h1>
+<p>오픈소스 기초 과제</p>
+<p>모바일시스템공학과</p>
+<p>32212061</p>
+<p>변윤성</p>
 <h2 id="1">1. 프로젝트 개요</h2>
-<p>본 프로젝트는 Django와 Docker를 사용하여 구현한 6/45 로또 웹 사이트이다. 일반 사용자는 회원가입과 로그인 후 수동 또는 자동으로 로또를 구매할 수 있고, 추첨 완료 후 본인의 당첨 여부를 확인할 수 있다. 관리자는 판매 현황, 판매 내역, 추첨 기능, 회차별 당첨자 수, 판매액, 지급액, 이익을 확인할 수 있다.</p>
+<p>본 보고서는 Django와 Docker를 활용하여 개발한 <code>Lotto 사이트</code>의 설계, 구현 과정, 주요 화면, 테스트 결과를 정리한 문서이다. 이 사이트는 6/45 로또 서비스를 웹으로 구현한 과제용 프로젝트이며, 일반 사용자는 회원가입과 로그인 후 수동 또는 자동으로 로또를 구매할 수 있다. 구매한 티켓은 사용자별로 저장되며, 추첨이 완료되면 사용자는 본인의 당첨 여부와 당첨금을 확인할 수 있다. 관리자는 판매 현황과 판매 내역을 확인하고, 추첨 기능을 실행하며, 회차별 당첨자 수와 이익을 확인할 수 있다.</p>
+<p>프로젝트 작성 과정에서는 GPT(ChatGPT/OpenAI Codex)를 사용했다. GPT는 요구사항 정리, Django 구조 설계, Docker 구성, 화면 설명 작성, 테스트 코드 작성, 보고서 문장 정리 과정에서 보조 도구로 활용했다.</p>
 <p>소스 코드는 다음 GitHub 저장소에 업로드했다.</p>
 <pre><code class="language-text">https://github.com/iamdbstjd/OS_LOTTO
 </code></pre>
@@ -412,7 +417,7 @@ OK
 <h2 id="8-ai">8. AI 도구 사용 내역</h2>
 <p>본 프로젝트 작성 과정에서 AI 도구를 사용했다.</p>
 <ul>
-<li>사용 도구: OpenAI Codex / ChatGPT</li>
+<li>사용 도구: GPT(ChatGPT) / OpenAI Codex</li>
 <li>사용 목적:</li>
 <li>과제 요구사항 분석</li>
 <li>Django 모델, view, form, template 구조 설계</li>
