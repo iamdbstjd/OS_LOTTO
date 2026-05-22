@@ -15,6 +15,10 @@ Django와 Docker multi-container 환경으로 구성한 6/45 로또 웹 사이�
 - 관리자 추첨 실행
 - 회차별 1등~5등 당첨자 수, 판매액, 지급액, 이익 확인
 
+## 화면 미리보기
+
+![Lotto 구매 화면](docs/images/lotto-home.png)
+
 ## Docker 실행
 
 ```bash
@@ -55,3 +59,7 @@ Dockerfile          Django web 컨테이너
 docker-compose.yml  web + PostgreSQL db multi-container 구성
 REPORT.md           과제 보고서 초안
 ```
+
+## 라이선스
+
+MIT License
