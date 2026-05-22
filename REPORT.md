@@ -120,9 +120,10 @@ Django 애플리케이션은 화면 출력, 로그인 세션, 구매 처리, 추
 
 아래 화면은 제출 보고서 설명을 위해 데모 데이터로 캡처했다.
 
-### 4.1 로그인 화면
-
-![로그인 화면](docs/images/report/01-login.png)
+<section class="screen-shot-block">
+<h3>4.1 로그인 화면</h3>
+<img src="docs/images/report/01-login.png" alt="로그인 화면">
+</section>
 
 로그인 화면에서는 기존 사용자가 아이디와 비밀번호를 입력해 서비스에 접속한다.
 
@@ -131,9 +132,10 @@ Django 애플리케이션은 화면 출력, 로그인 세션, 구매 처리, 추
 - 인증 실패 시: 로그인 화면에 오류가 표시된다.
 - `회원가입` 링크 클릭: 회원가입 화면으로 이동한다.
 
-### 4.2 회원가입 화면
-
-![회원가입 화면](docs/images/report/02-signup.png)
+<section class="screen-shot-block">
+<h3>4.2 회원가입 화면</h3>
+<img src="docs/images/report/02-signup.png" alt="회원가입 화면">
+</section>
 
 회원가입 화면에서는 신규 사용자가 아이디, 이메일, 비밀번호를 입력한다.
 
@@ -141,9 +143,10 @@ Django 애플리케이션은 화면 출력, 로그인 세션, 구매 처리, 추
 - 가입 성공 시: 자동 로그인 후 로또 구매 메인 화면으로 이동한다.
 - 비밀번호 조건 불충족 또는 중복 아이디 입력 시: 폼 오류를 표시한다.
 
-### 4.3 사용자 메인 및 구매 화면
-
-![사용자 구매 화면](docs/images/report/03-user-home.png)
+<section class="screen-shot-block">
+<h3>4.3 사용자 메인 및 구매 화면</h3>
+<img src="docs/images/report/03-user-home.png" alt="사용자 구매 화면">
+</section>
 
 사용자 메인 화면은 현재 판매중인 회차, 사용자 구매 요약, 수동 구매, 자동 구매, 최근 구매 내역을 보여준다.
 
@@ -160,9 +163,10 @@ Django 애플리케이션은 화면 출력, 로그인 세션, 구매 처리, 추
 - 최근 구매 영역:
   - 티켓번호, 구매 방식, 번호, 추첨 전/당첨/낙첨 상태를 확인할 수 있다.
 
-### 4.4 사용자 구매 내역 화면
-
-![구매 내역 화면](docs/images/report/04-ticket-list.png)
+<section class="screen-shot-block">
+<h3>4.4 사용자 구매 내역 화면</h3>
+<img src="docs/images/report/04-ticket-list.png" alt="구매 내역 화면">
+</section>
 
 구매 내역 화면은 로그인한 사용자 본인의 티켓만 표시한다.
 
@@ -173,9 +177,10 @@ Django 애플리케이션은 화면 출력, 로그인 세션, 구매 처리, 추
 - 결과: 추첨 전, 낙첨, 1등~5등을 표시한다.
 - 당첨금: 추첨 후 계산된 당첨 금액을 표시한다.
 
-### 4.5 사용자 당첨 확인 화면
-
-![당첨 확인 화면](docs/images/report/05-result-list.png)
+<section class="screen-shot-block">
+<h3>4.5 사용자 당첨 확인 화면</h3>
+<img src="docs/images/report/05-result-list.png" alt="당첨 확인 화면">
+</section>
 
 당첨 확인 화면은 추첨이 완료된 회차의 티켓만 보여준다.
 
@@ -185,9 +190,10 @@ Django 애플리케이션은 화면 출력, 로그인 세션, 구매 처리, 추
 - 결과: 로또 등수 또는 낙첨을 표시한다.
 - 당첨금: 등수별 고정 당첨금을 표시한다.
 
-### 4.6 관리자 대시보드 화면
-
-![관리자 대시보드 화면](docs/images/report/06-staff-dashboard.png)
+<section class="screen-shot-block">
+<h3>4.6 관리자 대시보드 화면</h3>
+<img src="docs/images/report/06-staff-dashboard.png" alt="관리자 대시보드 화면">
+</section>
 
 관리자 대시보드는 전체 판매 현황과 추첨 기능을 제공한다.
 
@@ -201,9 +207,10 @@ Django 애플리케이션은 화면 출력, 로그인 세션, 구매 처리, 추
 - 전체 판매 장수, 총 판매액, 총 지급액, 서비스 이익을 확인할 수 있다.
 - 추첨 내역 표에서 `상세`를 클릭하면 해당 회차의 당첨 상세 화면으로 이동한다.
 
-### 4.7 관리자 판매 내역 화면
-
-![관리자 판매 내역 화면](docs/images/report/07-staff-sales.png)
+<section class="screen-shot-block">
+<h3>4.7 관리자 판매 내역 화면</h3>
+<img src="docs/images/report/07-staff-sales.png" alt="관리자 판매 내역 화면">
+</section>
 
 판매 내역 화면은 관리자 전용 화면이며 회차별 판매 요약과 최근 발급 티켓을 보여준다.
 
@@ -214,9 +221,10 @@ Django 애플리케이션은 화면 출력, 로그인 세션, 구매 처리, 추
   - 구매 일시, 티켓번호, 사용자, 회차, 구매 방식, 번호, 결과, 당첨금을 확인한다.
   - 관리자가 실제 판매 내역을 추적할 수 있도록 티켓 단위로 표시한다.
 
-### 4.8 관리자 당첨 상세 화면
-
-![관리자 당첨 상세 화면](docs/images/report/08-staff-draw-detail.png)
+<section class="screen-shot-block">
+<h3>4.8 관리자 당첨 상세 화면</h3>
+<img src="docs/images/report/08-staff-draw-detail.png" alt="관리자 당첨 상세 화면">
+</section>
 
 관리자 당첨 상세 화면은 특정 회차의 추첨 결과와 구매자별 결과를 보여준다.
 
