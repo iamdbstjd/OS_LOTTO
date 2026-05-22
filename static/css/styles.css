@@ -507,7 +507,7 @@ tbody tr:hover {
     margin-bottom: 16px;
 }
 
-.result-strip div {
+.result-strip > div {
     display: grid;
     gap: 7px;
 }
