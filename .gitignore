@@ -6,3 +6,7 @@ staticfiles/
 .coverage
 .pytest_cache/
 .DS_Store
+REPORT.md
+REPORT.html
+REPORT.pdf
+docs/images/report/

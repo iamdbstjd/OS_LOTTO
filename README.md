@@ -57,7 +57,6 @@ templates/          사용자/관리자 화면 템플릿
 static/css/         화면 스타일
 Dockerfile          Django web 컨테이너
 docker-compose.yml  web + PostgreSQL db multi-container 구성
-REPORT.md           과제 보고서 초안
 ```
 
 ## 라이선스
